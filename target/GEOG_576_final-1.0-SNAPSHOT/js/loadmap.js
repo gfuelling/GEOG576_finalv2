@@ -49,42 +49,34 @@ function mapInitialization(races) {
         contentStr += '<p><b>' + 'Distance' + ':</b>&nbsp' + e['distance'] +
             '</p>';
 
-//         //Start of custom marker code
-//         if (e['surface'] == 'Track') {
-//             var url = "img/track.png";
-//         }
-//
-//         if (e['surface'] == 'Street') {
-//             var url = "img/bandage.png";
-//         }
-//
-//         if (e['surface'] == 'Trail') {
-//             var url = "img/solidarity.png";
-//         }
-//
-//         var icon = {
-//             url: url,
-//             scaledSize: new google.maps.Size(40, 40), // scaled size
-//             origin: new google.maps.Point(0,0), // origin
-//             anchor: new google.maps.Point(0, 0) // anchor
-//         };
-//
-// // Create the marker
-//         var marker = new google.maps.Marker({ // Set the marker
-//             position: latlng, // Position marker to coordinates
-//             map: map, // assign the market to our map variable
-//             customInfo: contentStr,
-//             icon: icon
-//         });
+        //Start of custom marker code
+        if (e['surface'] == 'Track') {
+            var url = "img/track.png";
+        }
 
-        //this is the original  default marker code from the lab
-        // Create the marker
+        if (e['surface'] == 'Street') {
+            var url = "img/road.png";
+        }
+
+        if (e['surface'] == 'Trail') {
+            var url = "img/trail.png";
+        }
+
+        var icon = {
+            url: url,
+            scaledSize: new google.maps.Size(40, 40), // scaled size
+            origin: new google.maps.Point(0,0), // origin
+            anchor: new google.maps.Point(0, 0) // anchor
+        };
+
+// Create the marker
         var marker = new google.maps.Marker({ // Set the marker
-            position : latlng, // Position marker to coordinates
-            map : map, // assign the market to our map variable
+            position: latlng, // Position marker to coordinates
+            map: map, // assign the market to our map variable
             customInfo: contentStr,
+            icon: icon
         });
-//end of default marker
+        
 
         // Add a Click Listener to the marker
         google.maps.event.addListener(marker, 'click', function() {
