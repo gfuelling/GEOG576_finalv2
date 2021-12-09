@@ -55,7 +55,61 @@
                         <div><label>Distance:</label><input placeholder="Number of Miles" name="distance"></div>
                         <div><label>Elevation Gain:</label><input placeholder="Elevation Gain" name="elevation"></div>
                         <div><label>City:</label><input placeholder="City" name="city"></div>
-                        <div><label>State:</label><input placeholder="State" name="state"></div>
+                        <div><label>State:</label>
+                            <select name="state">
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AR">AR</option>
+                                <option value="AZ">AZ</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DC">DC</option>
+                                <option value="DE">DE</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="HI">HI</option>
+                                <option value="IA">IA</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="MA">MA</option>
+                                <option value="MD">MD</option>
+                                <option value="ME">ME</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MO">MO</option>
+                                <option value="MS">MS</option>
+                                <option value="MT">MT</option>
+                                <option value="NC">NC</option>
+                                <option value="NE">NE</option>
+                                <option value="NH">NH</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NM">NM</option>
+                                <option value="NV">NV</option>
+                                <option value="NY">NY</option>
+                                <option value="ND">ND</option>
+                                <option value="OH">OH</option>
+                                <option value="OK">OK</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="RI">RI</option>
+                                <option value="SC">SC</option>
+                                <option value="SD">SD</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="WA">WA</option>
+                                <option value="WI">WI</option>
+                                <option value="WV">WV</option>
+                                <option value="WY">WY</option>
+                            </select>
+                        </div>
                         <div><label>Latitude:</label><input placeholder="Latitude" name ="latitude"></div>
                         <div><label>Longitude:</label><input placeholder="Longitude" name ="longitude"></div>
                         <button type="submit" class="btn btn-default" id="report_submit_btn">
@@ -68,7 +122,7 @@
                 <div class="tab-pane" id="query_race">
                     <form id = "query_race_form">
                         <div><label>Surface Type:</label>
-                            <select onchange="onSelectSurfaceType(this)" name="surface">
+                            <select name="surface">
                                 <option value="">Choose the surface type</option>
                                 <option value="Track">Track</option>
                                 <option value="Street">Road</option>

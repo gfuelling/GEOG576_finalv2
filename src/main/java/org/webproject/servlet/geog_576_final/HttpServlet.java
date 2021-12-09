@@ -85,7 +85,6 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
         String elevation = request.getParameter("elevation");
 
 
-        //think this is the correct sql format
         sql = "insert into races (race_name, surface, city, state, distance, elevation, geom)" +
                 " values ('" + race_name + "','" + surface + "','" + city + "','" + state + "','" + distance + "','" + elevation + "', ST_GeomFromText('POINT(" + lon + " " + lat + ")', 4326))";
 
@@ -106,10 +105,8 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
     public void queryReport(HttpServletRequest request, HttpServletResponse
             response) throws JSONException, SQLException, IOException {
         JSONArray list = new JSONArray();
-        //String sql2 = "select * from races Where surface =" + request.getParameter("surface");
         String sql = "select race_name, surface, city, state, distance, ST_X(geom) as " +
                 "longitude, ST_Y(geom) as latitude, elevation from races";
-        System.out.println(sql);
         queryReportHelper(sql,list);
 
         response.getWriter().write(list.toString());
