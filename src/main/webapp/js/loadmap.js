@@ -1,11 +1,9 @@
 var map;
 var place;
-var autocomplete;
 var infowindow = new google.maps.InfoWindow();
 
 function initialization() {
     showAllRaces();
-    //initAutocomplete();
 }
 
 function showAllRaces() {
@@ -23,7 +21,6 @@ function showAllRaces() {
 }
 
 function mapInitialization(races) {
-    console.log("Date is:" + Date.now())
 
     var mapOptions = {
         mapTypeId : google.maps.MapTypeId.ROADMAP, // Set the type of Map
@@ -90,40 +87,6 @@ function mapInitialization(races) {
     map.fitBounds (bounds);
 
 }
-
-// function initAutocomplete() {
-//     // Create the autocomplete object
-//     autocomplete = new google.maps.places.Autocomplete(document
-//         .getElementById('autocomplete'));
-//
-//     // When the user selects an address from the dropdown, show the place selected
-//     autocomplete.addListener('place_changed', onPlaceChanged);
-// }
-//
-// function onPlaceChanged() {
-//     const marker = new google.maps.Marker({
-//         map,
-//         anchorPoint: new google.maps.Point(0, -29),
-//     });
-//     place = autocomplete.getPlace();
-//     if (!place.geometry || !place.geometry.location) {
-//         // User entered the name of a Place that was not suggested and
-//         // pressed the Enter key, or the Place Details request failed.
-//         window.alert("No details available for input: '" + place.name + "'");
-//         return;
-//     }
-//
-//     // If the place has a geometry, then present it on a map.
-//     if (place.geometry.viewport) {
-//         marker.setVisible(false);
-//         map.fitBounds(place.geometry.viewport);
-//     } else {
-//         map.setCenter(place.geometry.location);
-//         map.setZoom(17);
-//     }
-//     marker.setPosition(place.geometry.location);
-//     marker.setVisible(true);
-// }
 
 //Execute our 'initialization' function once the page has loaded.
 google.maps.event.addDomListener(window, 'load', initialization);

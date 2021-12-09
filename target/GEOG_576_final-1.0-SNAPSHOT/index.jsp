@@ -45,7 +45,7 @@
                     <form id = "create_race_form">
                         <div><label>Race Name:&nbsp</label><input placeholder="race name" name="race_name"></div>
                         <div><label>Surface Type:</label>
-                            <select onchange="onSelectSurfaceType(this)" name="surface">
+                            <select name="surface">
                                 <option value="">Choose the surface type</option>
                                 <option value="Track">Track</option>
                                 <option value="Street">Road</option>
@@ -76,7 +76,7 @@
                             </select>
                         </div>
                         <div><label>Distance:</label><input placeholder="Number of Miles" name = "distance"></div>
-                        <div><label>City:</label><input placeholder="Nearest City" name = "city"></div>
+<%--                        <div><label>City:</label><input placeholder="Nearest City" name = "city"></div>--%>
                         <button type="submit" class="btn btn-default">
                             <span class="glyphicon glyphicon-star"></span> Submit the query
                         </button>
