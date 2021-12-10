@@ -17,7 +17,7 @@ public class JDBCDemo {
             conn = DriverManager.getConnection(url, "postgres", "admin");
 
             // query the database
-            String sql = "select race_name, surface, city, state, distance, elevation, " +
+            String sql = "select race_name, surface, city, state, distance, elevation, race_company " +
                     "ST_AsText(geom) as geom from races";
             stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(sql);
@@ -31,6 +31,7 @@ public class JDBCDemo {
                     System.out.println("state: " + res.getString("state"));
                     System.out.println("distance: " + res.getString("distance"));
                     System.out.println("elevation: " + res.getString("elevation"));
+                    System.out.println("race_company: " + res.getString("race_company"));
                     System.out.println("geom: " + res.getString("geom"));
                 }
             }

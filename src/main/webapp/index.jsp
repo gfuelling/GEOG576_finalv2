@@ -43,7 +43,7 @@
                 <!-- Add Race Tab Panel -->
                 <div class="tab-pane active" id="create_race">
                     <form id = "create_race_form">
-                        <div><label>Race Name:&nbsp</label><input placeholder="race name" name="race_name"></div>
+                        <div><label>Race Name:&nbsp</label><input placeholder="Race Name" name="race_name"></div>
                         <div><label>Surface Type:</label>
                             <select name="surface">
                                 <option value="">Choose the surface type</option>
@@ -110,6 +110,7 @@
                                 <option value="WY">WY</option>
                             </select>
                         </div>
+                        <div><label>Race Company:</label><input placeholder="Race Company" name="race_company"></div>
                         <div><label>Latitude:</label><input placeholder="Latitude" name ="latitude"></div>
                         <div><label>Longitude:</label><input placeholder="Longitude" name ="longitude"></div>
                         <button type="submit" class="btn btn-default" id="report_submit_btn">
@@ -131,6 +132,7 @@
                         </div>
                         <div><label>Distance:</label><input placeholder="Number of Miles" name = "distance"></div>
 <%--                        <div><label>City:</label><input placeholder="Nearest City" name = "city"></div>--%>
+                        <div><label>Race Company:</label><input placeholder="Race Company" name = "race_company"></div>
                         <button type="submit" class="btn btn-default">
                             <span class="glyphicon glyphicon-star"></span> Submit the query
                         </button>
