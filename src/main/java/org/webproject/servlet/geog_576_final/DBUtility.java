@@ -71,10 +71,10 @@ public class DBUtility {
         DBUtility util = new DBUtility();
 
         // 1. create a user
-        util.modifyDB("insert into races (race_name) values ('test_user_1_fN')");
+        util.modifyDB("insert into races (race_name) values ('testn')");
 
         // 2. query the database
-        ResultSet res = util.queryDB("select * from races where race_name = 'test_user_1_fN'");
+        ResultSet res = util.queryDB("select * from races where race_name = 'testn'");
         while (res.next()) {
             System.out.println(res.getString("race_name"));
         }

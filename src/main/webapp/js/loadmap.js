@@ -62,7 +62,6 @@ function mapInitialization(races) {
 
         var icon = {
             url: url,
-            scaledSize: new google.maps.Size(40, 40), // scaled size
             origin: new google.maps.Point(0,0), // origin
             anchor: new google.maps.Point(0, 0) // anchor
         };

@@ -83,10 +83,11 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
         String state = request.getParameter("state");
         String distance = request.getParameter("distance");
         String elevation = request.getParameter("elevation");
+        String race_company = request.getParameter("race_company");
 
 
-        sql = "insert into races (race_name, surface, city, state, distance, elevation, geom)" +
-                " values ('" + race_name + "','" + surface + "','" + city + "','" + state + "','" + distance + "','" + elevation + "', ST_GeomFromText('POINT(" + lon + " " + lat + ")', 4326))";
+        sql = "insert into races (race_name, surface, city, state, distance, elevation, race_company, geom)" +
+                " values ('" + race_name + "','" + surface + "','" + city + "','" + state + "','" + distance + "','" + elevation + "','" + race_company + "', ST_GeomFromText('POINT(" + lon + " " + lat + ")', 4326))";
 
         dbutil.modifyDB(sql);
 
@@ -105,15 +106,55 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
     public void queryReport(HttpServletRequest request, HttpServletResponse
             response) throws JSONException, SQLException, IOException {
         JSONArray list = new JSONArray();
-        String sql = "select race_name, surface, city, state, distance, ST_X(geom) as " +
-                "longitude, ST_Y(geom) as latitude, elevation from races";
-        queryReportHelper(sql,list);
+
+        String surface_type = request.getParameter("surface");
+
+        String race_distance = request.getParameter("distance");
+
+        System.out.println(surface_type);
+
+        System.out.println(race_distance);
+
+        String sql;
+        if (surface_type == null && race_distance == null){
+            System.out.println("starting if statement for null");
+            sql = "select race_name, surface, elevation, city, state, distance, race_company, ST_X(geom) as " +
+                    "longitude, ST_Y(geom) as latitude, elevation from races";
+            queryReportHelper(sql,list,surface_type,race_distance);
+        } else if (surface_type != null && race_distance ==null){
+            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+                    "longitude, ST_Y(geom) as latitude, elevation from races where surface = ";
+
+            queryReportHelper(sql,list, surface_type, race_distance);
+        } else if (race_distance != null && surface_type == null){
+            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+                    "longitude, ST_Y(geom) as latitude, elevation from races where distance = ";
+            queryReportHelper(sql,list, surface_type, race_distance);
+        } else if (race_distance != null && surface_type != null){
+            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+                    "longitude, ST_Y(geom) as latitude, elevation from races where ";
+            queryReportHelper(sql,list, surface_type, race_distance);
+        }
+
 
         response.getWriter().write(list.toString());
     }
 
-    public static void queryReportHelper(String sql, JSONArray list) throws SQLException {
+    public static void queryReportHelper(String sql, JSONArray list,String surface_type, String race_distance) throws SQLException {
         DBUtility dbutil = new DBUtility();
+        if (race_distance != null && surface_type != null) {
+            sql += "surface = " + "'" + surface_type + "'" +" AND distance =" + "'" + race_distance + "'";
+            System.out.println(sql);
+        }
+        else if (surface_type != null) {
+            sql += "'" + surface_type + "'";
+            System.out.println(sql);
+        }
+
+        else if (race_distance != null) {
+            sql += "'" + race_distance + "'";
+            System.out.println(sql);
+        }
 
         ResultSet res = dbutil.queryDB(sql);
         while (res.next()) {
@@ -127,6 +168,7 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
             m.put("longitude", res.getString("longitude"));
             m.put("latitude", res.getString("latitude"));
             m.put("elevation", res.getString("elevation"));
+            m.put("race_company", res.getString("race_company"));
             list.put(m);
         }
     }
