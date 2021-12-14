@@ -45,7 +45,7 @@ function mapInitialization(races) {
             '</p>';
         contentStr += '<p><b>' + 'Distance' + ':</b>&nbsp' + e['distance'] +
             '</p>';
-        contentStr += '<p><b>' + 'Held by:' + ':</b>&nbsp' + e['race_company'] +'</p>';
+        contentStr += '<p><b>' + 'Held by' + ':</b>&nbsp' + e['race_company'] +'</p>';
 
         //Start of custom marker code
         if (e['surface'] == 'Track') {

@@ -49,7 +49,7 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
         if (tab_id.equals("0")) {
             System.out.println("A report is submitted!");
             try {
-                createReport(request, response);
+                createRace(request, response);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -67,9 +67,18 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
                 e.printStackTrace();
             }
         }
+
+        else if (tab_id.equals("2")) {
+            try {
+                createRaceCompany(request, response);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
     //changes here to match race table
-    private void createReport(HttpServletRequest request, HttpServletResponse
+    private void createRace(HttpServletRequest request, HttpServletResponse
             response) throws SQLException, IOException {
         DBUtility dbutil = new DBUtility();
         String sql;
@@ -111,49 +120,84 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
 
         String race_distance = request.getParameter("distance");
 
-        System.out.println(surface_type);
-
-        System.out.println(race_distance);
+        String race_company = request.getParameter("race_company");
 
         String sql;
-        if (surface_type == null && race_distance == null){
-            System.out.println("starting if statement for null");
+        //null and starting one
+        if (surface_type == null && race_distance == null && race_company == null){
             sql = "select race_name, surface, elevation, city, state, distance, race_company, ST_X(geom) as " +
                     "longitude, ST_Y(geom) as latitude, elevation from races";
-            queryReportHelper(sql,list,surface_type,race_distance);
-        } else if (surface_type != null && race_distance ==null){
+            queryReportHelper(sql,list,surface_type,race_distance,race_company);
+        //only surface type
+        } else if (surface_type != null && race_distance == null && race_company == null){
             sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
                     "longitude, ST_Y(geom) as latitude, elevation from races where surface = ";
+            queryReportHelper(sql,list,surface_type,race_distance,race_company);
 
-            queryReportHelper(sql,list, surface_type, race_distance);
-        } else if (race_distance != null && surface_type == null){
+        //only race distance
+        } else if (race_distance != null && surface_type == null && race_company == null){
             sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
                     "longitude, ST_Y(geom) as latitude, elevation from races where distance = ";
-            queryReportHelper(sql,list, surface_type, race_distance);
-        } else if (race_distance != null && surface_type != null){
+            queryReportHelper(sql,list,surface_type,race_distance,race_company);
+
+        //only race company
+        } else if (race_company != null && surface_type == null && race_distance == null){
+            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+                    "longitude, ST_Y(geom) as latitude, elevation from races where race_company = ";
+            queryReportHelper(sql,list,surface_type,race_distance,race_company);
+
+            //race distance and surface type
+        }else if (race_distance != null && surface_type != null && race_company == null){
             sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
                     "longitude, ST_Y(geom) as latitude, elevation from races where ";
-            queryReportHelper(sql,list, surface_type, race_distance);
+            queryReportHelper(sql,list,surface_type,race_distance,race_company);
+
+        //race company and surface type
+        } else if (race_company != null && surface_type != null && race_distance == null){
+            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+                    "longitude, ST_Y(geom) as latitude, elevation from races where ";
+            queryReportHelper(sql,list,surface_type,race_distance,race_company);
         }
+
+        //race distance and race company
+        else if (race_company != null && race_distance != null && surface_type == null){
+            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+                    "longitude, ST_Y(geom) as latitude, elevation from races where ";
+            queryReportHelper(sql,list,surface_type,race_distance,race_company);
+        }
+
 
 
         response.getWriter().write(list.toString());
     }
 
-    public static void queryReportHelper(String sql, JSONArray list,String surface_type, String race_distance) throws SQLException {
+    public static void queryReportHelper(String sql, JSONArray list,String surface_type, String race_distance, String race_company) throws SQLException {
         DBUtility dbutil = new DBUtility();
-        if (race_distance != null && surface_type != null) {
+
+        //race distance and surface type
+        if (race_distance != null && surface_type != null && race_company == null) {
             sql += "surface = " + "'" + surface_type + "'" +" AND distance =" + "'" + race_distance + "'";
-            System.out.println(sql);
-        }
-        else if (surface_type != null) {
-            sql += "'" + surface_type + "'";
-            System.out.println(sql);
         }
 
-        else if (race_distance != null) {
+        //race company and surface type
+        else if (race_company != null && surface_type != null && race_distance == null) {
+            sql += "surface = " + "'" + surface_type + "'" +" AND race_company =" + "'" + race_company + "'";
+        }
+
+        //race distance and race company
+        else if (race_distance != null && race_company != null && surface_type == null) {
+            sql += "race_company = " + "'" + race_company + "'" +" AND distance =" + "'" + race_distance + "'";
+        }
+        else if (surface_type != null && race_company == null && race_distance == null) {
+            sql += "'" + surface_type + "'";
+        }
+
+        else if (race_company != null && surface_type == null && race_distance == null) {
+            sql += "'" + race_company + "'";
+        }
+
+        else if (race_distance != null && race_company == null && surface_type == null) {
             sql += "'" + race_distance + "'";
-            System.out.println(sql);
         }
 
         ResultSet res = dbutil.queryDB(sql);
@@ -171,6 +215,36 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
             m.put("race_company", res.getString("race_company"));
             list.put(m);
         }
+    }
+
+    private void createRaceCompany(HttpServletRequest request, HttpServletResponse
+            response) throws SQLException, IOException {
+        DBUtility dbutil = new DBUtility();
+        String sql;
+
+        // Create race
+        String company_name = request.getParameter("company_name");
+        String race_name = request.getParameter("race_name");
+        String city = request.getParameter("city");
+        String state = request.getParameter("state");
+
+        sql = "insert into race_company (company_name, race_name, city, state)" +
+                " values ('" + company_name + "','" + race_name + "','" + city + "','" + state + "')";
+
+
+
+        dbutil.modifyDB(sql);
+
+
+        // response that the report submission is successful
+        JSONObject data = new JSONObject();
+        try {
+            data.put("status", "success");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        response.getWriter().write(data.toString());
+
     }
 
     public void main() throws JSONException {

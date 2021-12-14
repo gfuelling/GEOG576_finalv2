@@ -32,10 +32,11 @@
     <div class="row">
         <div class="sidebar col-xs-3">
 
-            <!-- Tab Navis-->
+            <!-- Tab Navs-->
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#add_race" data-toggle="tab">Add Race</a></li>
+                <li><a href="#add_race" data-toggle="tab">Add Race</a></li>
                 <li><a href="#query_race" data-toggle="tab">Query Race</a></li>
+                <li><a href="#add_race_company" data-toggle="tab">Add Race Company</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -131,10 +132,22 @@
                             </select>
                         </div>
                         <div><label>Distance:</label><input placeholder="Number of Miles" name = "distance"></div>
-<%--                        <div><label>City:</label><input placeholder="Nearest City" name = "city"></div>--%>
                         <div><label>Race Company:</label><input placeholder="Race Company" name = "race_company"></div>
                         <button type="submit" class="btn btn-default">
                             <span class="glyphicon glyphicon-star"></span> Submit the query
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Add Race Company Tab Panel -->
+                <div class="tab-pane" id="add_race_company">
+                    <form id = "create_race_company_form">
+                        <div><label>Race Company:</label><input placeholder="Race Company Name" name = "company_name"></div>
+                        <div><label>Race Name:</label><input placeholder="Race Name" name = "race_name"></div>
+                        <div><label>City:</label><input placeholder="City the company is based in" name = "city"></div>
+                        <div><label>State:</label><input placeholder="State the company is based in" name = "state"></div>
+                        <button type="submit" class="btn btn-default" id="report_submit_btn_company">
+                            <span class="glyphicon glyphicon-star"></span> Submit the Race Company
                         </button>
                     </form>
                 </div>
