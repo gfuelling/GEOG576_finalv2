@@ -7,7 +7,6 @@ function queryRace(event) {
 
     a = a.filter(function(item){return item.value != '';});
 
-    console.log(JSON.stringify(a));
     $.ajax({
         url: 'HttpServlet',
         type: 'POST',
@@ -23,7 +22,6 @@ function queryRace(event) {
 }
 
 function createRace(event){
-    console.log("starting create race function")
 
     event.preventDefault(); // stop form from submitting normally
 
@@ -31,8 +29,6 @@ function createRace(event){
     a.push({ name: "tab_id", value: "0" });
 
     a = a.filter(function(item){return item.value != '';});
-    console.log(a.toString())
-    console.log("starting ajax call")
     $.ajax({
         url: 'HttpServlet',
         type: 'POST',
@@ -52,15 +48,12 @@ function createRace(event){
 }
 
 function createRaceCompany(event){
-    console.log("starting create race company function")
     event.preventDefault(); // stop form from submitting normally
 
     var a = $("#create_race_company_form").serializeArray();
     a.push({ name: "tab_id", value: "2" });
 
     a = a.filter(function(item){return item.value != '';});
-    console.log(a.toString())
-    console.log("starting ajax call")
     $.ajax({
         url: 'HttpServlet',
         type: 'POST',

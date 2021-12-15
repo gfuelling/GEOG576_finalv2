@@ -3,6 +3,7 @@ package org.webproject.servlet.geog_576_final;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -98,6 +99,7 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
         sql = "insert into races (race_name, surface, city, state, distance, elevation, race_company, geom)" +
                 " values ('" + race_name + "','" + surface + "','" + city + "','" + state + "','" + distance + "','" + elevation + "','" + race_company + "', ST_GeomFromText('POINT(" + lon + " " + lat + ")', 4326))";
 
+
         dbutil.modifyDB(sql);
 
 
@@ -121,6 +123,7 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
         String race_distance = request.getParameter("distance");
 
         String race_company = request.getParameter("race_company");
+        System.out.println(race_company);
 
         String sql;
         //null and starting one
@@ -130,38 +133,40 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
             queryReportHelper(sql,list,surface_type,race_distance,race_company);
         //only surface type
         } else if (surface_type != null && race_distance == null && race_company == null){
-            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+            sql = "select race_name, elevation, surface, race_company, city, state, distance, ST_X(geom) as " +
                     "longitude, ST_Y(geom) as latitude, elevation from races where surface = ";
             queryReportHelper(sql,list,surface_type,race_distance,race_company);
 
         //only race distance
         } else if (race_distance != null && surface_type == null && race_company == null){
-            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+            sql = "select race_name, elevation, surface, race_company, city, state, distance, ST_X(geom) as " +
                     "longitude, ST_Y(geom) as latitude, elevation from races where distance = ";
             queryReportHelper(sql,list,surface_type,race_distance,race_company);
 
         //only race company
         } else if (race_company != null && surface_type == null && race_distance == null){
-            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+            sql = "select race_name, elevation, surface, race_company, city, state, distance, ST_X(geom) as " +
                     "longitude, ST_Y(geom) as latitude, elevation from races where race_company = ";
             queryReportHelper(sql,list,surface_type,race_distance,race_company);
 
+
             //race distance and surface type
         }else if (race_distance != null && surface_type != null && race_company == null){
-            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+            sql = "select race_name, elevation, surface, race_company, city, state, distance, ST_X(geom) as " +
                     "longitude, ST_Y(geom) as latitude, elevation from races where ";
             queryReportHelper(sql,list,surface_type,race_distance,race_company);
 
         //race company and surface type
         } else if (race_company != null && surface_type != null && race_distance == null){
-            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+            sql = "select race_name, elevation, surface, race_company, city, state, distance, ST_X(geom) as " +
                     "longitude, ST_Y(geom) as latitude, elevation from races where ";
             queryReportHelper(sql,list,surface_type,race_distance,race_company);
+
         }
 
         //race distance and race company
         else if (race_company != null && race_distance != null && surface_type == null){
-            sql = "select race_name, elevation, surface, city, state, distance, ST_X(geom) as " +
+            sql = "select race_name, elevation, surface, race_company, city, state, distance, ST_X(geom) as " +
                     "longitude, ST_Y(geom) as latitude, elevation from races where ";
             queryReportHelper(sql,list,surface_type,race_distance,race_company);
         }
@@ -194,6 +199,7 @@ public class HttpServlet extends javax.servlet.http.HttpServlet {
 
         else if (race_company != null && surface_type == null && race_distance == null) {
             sql += "'" + race_company + "'";
+            System.out.println(sql);
         }
 
         else if (race_distance != null && race_company == null && surface_type == null) {
